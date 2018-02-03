@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/indexStyle.css')}}" />
+</head>
+<body>
+	<h1>Welcome to the Great Number Game!</h1>
+	<p>I am thinking of a number between 1 and 100</p>
+	<p>Take a guess!</p>
+	<form action="/pick" method="POST">
+		<input type="text" name="guess" placeholder="Enter your guess here!">
+		<input type="submit">
+	</form>
+	{% if session["guess"] == "" %}
+		
+	{% elif session["answer"] == session["guess"] %}
+		<div id="win">
+			<p>{{ session["answer"] }} was the number! It took you {{ session["count"] }} guesses!</p>
+			<form action="/reset">
+				<input type="submit" value="Play Again!">
+			</form>
+		</div>
+	{% else %}
+		{% if session["answer"] < session["guess"] %}
+			<div class="hint">Too high!</div>
+		{% else %}
+			<div class="hint">Too low!</div>
+		{% endif %}
+	{% endif %}
+</body>
+</html>
